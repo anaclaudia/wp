@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ZMdkfqFU
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: AfwxjG8g
+    ports:
+      - 3306
+    volumes:
+      - ./db_files/:/docker-entrypoint-initdb.d/
+      - ./datadir/:/var/lib/mysql/
+  wordpress:
+    image: wordpress:4.7.4-apache
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_PASSWORD: AfwxjG8g
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_HOST: wordpress_mysql_1:3306
+    depends_on:
+      - "mysql"
